@@ -7,6 +7,7 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <assert.h>
 #include <sys/time.h>
 #include <stdint.h>
@@ -26,6 +27,8 @@
 
 
 typedef int matrix[N][N];
+
+int posix_memalign(void **memptr, size_t alignment, size_t size);
 
 /* not cache efficent :) */
 static void print( matrix m ){
@@ -155,8 +158,8 @@ int main( int argc, char* argv[] ){
 	matrix *m, *out;
 
 	// force pagealign
-	posix_memalign(&m, 1 << 20, sizeof(*m));
-	posix_memalign(&out, 1 << 20, sizeof(*m));
+	posix_memalign((void **) &m, 1 << 20, sizeof(*m));
+	posix_memalign((void **) &out, 1 << 20, sizeof(*m));
 
 	init( *m );
 
